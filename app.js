@@ -94,6 +94,7 @@ const setTime = () => {
 		);
 	} else {
 		if (currDate.getHours() == 16 && i >= 0 && i <= 3) {
+			className.innerHTML = "Join Practicum Class";
 			_btn.innerHTML = "Join Practicum Class";
 			classLink.setAttribute("href", "https://classroom.google.com/");
 		} else {
