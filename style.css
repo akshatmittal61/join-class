@@ -28,8 +28,6 @@ body {
 	background-color: #4285f4;
 }
 button {
-	border: 0;
-	padding: 0;
 	padding: 0.6rem 0.875rem;
 	font-size: 1.25rem;
 	border-radius: 7.5px;
@@ -37,6 +35,10 @@ button {
 	color: #f0f0f0;
 	background-color: #3f51b5;
 	border: 5px solid rgba(0, 0, 0, 0.2);
+}
+button:focus {
+	border: 5px solid transparent;
+	outline: 0;
 }
 .head {
 	color: #fbbc05;
