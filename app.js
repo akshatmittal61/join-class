@@ -77,7 +77,7 @@ const setTime = () => {
 		j = 0;
 	if (currDate.getHours() >= 9 && currDate.getHours() <= 16)
 		j = currDate.getHours() - 9;
-	else j = 6;
+	else j = 7;
 	className.innerHTML = classNames[timeTable[i][j]];
 	facultyName.innerHTML = facultyNames[timeTable[i][j]];
 	if (timeTable[i][j] != 0) {
