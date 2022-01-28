@@ -5,6 +5,7 @@ const classCode = document.querySelector(".class-code");
 const className = document.querySelector(".class-name");
 const facultyName = document.querySelector(".faculty-name");
 const classLink = document.querySelector(".class-link");
+
 const days = [
 	"Sunday",
 	"Monday",
@@ -67,6 +68,17 @@ const facultyNames = [
 	"Ambigavathi Munusamy",
 	"Minakshi Shastri",
 ];
+
+const showNotificaiton = (b) => {
+	const notification = new Notification(`Join ${b.clsName} class`, {
+		body: `Click to join ${b.clsName} by ${b.facName}`,
+		icon: "https://akshatmittal61.github.io/join-class/favicon.png",
+	});
+	notification.onclick = (e) => {
+		window.location.href = b.link;
+	};
+};
+
 const setTime = () => {
 	const currDate = new Date();
 	_date.innerHTML = `${days[currDate.getDay()]}, ${currDate.getDate()} ${
@@ -78,8 +90,10 @@ const setTime = () => {
 	if (currDate.getHours() >= 9 && currDate.getHours() <= 16)
 		j = currDate.getHours() - 9;
 	else j = 7;
+
 	className.innerHTML = classNames[timeTable[i][j]];
 	facultyName.innerHTML = facultyNames[timeTable[i][j]];
+
 	if (timeTable[i][j] != 0) {
 		setInterval(() => {
 			window.location.href = `https://meet.google.com/${
@@ -92,16 +106,59 @@ const setTime = () => {
 			"href",
 			`https://meet.google.com/${meetLinks[timeTable[i][j]]}`
 		);
+
+		if (Notification.permission === "granted") {
+			showNotificaiton({
+				subCode: `CSC40${timeTable[i][j]}`,
+				link: `https://meet.google.com/${meetLinks[timeTable[i][j]]}`,
+				clsName: classNames[timeTable[i][j]],
+				facName: facultyNames[timeTable[i][j]],
+			});
+		} else if (Notification.permission !== "denied") {
+			Notification.requestPermission().then((permission) => {
+				if (Notification.permission === "granted") {
+					showNotificaiton({
+						subCode: `CSC40${timeTable[i][j]}`,
+						link: `https://meet.google.com/${
+							meetLinks[timeTable[i][j]]
+						}`,
+						clsName: classNames[timeTable[i][j]],
+						facName: facultyNames[timeTable[i][j]],
+					});
+				}
+			});
+		}
 	} else {
 		if (currDate.getHours() == 16 && i >= 0 && i <= 3) {
 			className.innerHTML = "Join Practicum Class";
 			_btn.innerHTML = "Join Practicum Class";
 			classLink.setAttribute("href", "https://classroom.google.com/");
+
+			if (Notification.permission === "granted") {
+				showNotificaiton({
+					subCode: "CSL406",
+					link: "https://classroom.google.com/",
+					clsName: "Practicum",
+					facName: "your practicum faculty",
+				});
+			} else if (Notification.permission !== "denied") {
+				Notification.requestPermission().then((permission) => {
+					if (Notification.permission === "granted") {
+						showNotificaiton({
+							subCode: "CSL406",
+							link: "https://classroom.google.com/",
+							clsName: "Practicum",
+							facName: "your practicum faculty",
+						});
+					}
+				});
+			}
 		} else {
 			_btn.innerHTML = "No Class Right Now";
 			classLink.setAttribute("href", "./timetable.png");
 		}
 	}
 };
+
 setTime();
 setInterval(setTime, 1000);
