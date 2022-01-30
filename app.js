@@ -40,11 +40,11 @@ const meetLinks = [
 	"mwf-mjae-qxz",
 ];
 const timeTable = [
+	[0, 0, 0, 0, 0, 0, 0, 0],
 	[4, 2, 3, 5, 0, 1, 1, 0],
 	[2, 3, 5, 1, 0, 4, 3, 0],
 	[3, 5, 4, 1, 0, 2, 6, 0],
 	[5, 1, 4, 2, 0, 3, 7, 0],
-	[0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0],
 	[0, 0, 0, 0, 0, 0, 0, 0],
 ];
@@ -85,7 +85,7 @@ const setTime = () => {
 		Months[currDate.getMonth()]
 	}`;
 	_time.innerHTML = Date().slice(16, 24);
-	let i = +currDate.getDay() - 1,
+	let i = +currDate.getDay(),
 		j = 0;
 	if (currDate.getHours() >= 9 && currDate.getHours() <= 16)
 		j = currDate.getHours() - 9;
@@ -93,7 +93,7 @@ const setTime = () => {
 
 	className.innerHTML = classNames[timeTable[i][j]];
 	facultyName.innerHTML = facultyNames[timeTable[i][j]];
-
+	
 	if (timeTable[i][j] != 0) {
 		setInterval(() => {
 			window.location.href = `https://meet.google.com/${
